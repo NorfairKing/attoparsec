@@ -1,8 +1,6 @@
 resolver: lts-9.21
 packages:
 - .
-- benchmarks
-- examples
 extra-deps:
   - git: git@github.com:NorfairKing/scientific.git
     commit: 7bed869ff1d6eb5389d7cde54df8a1b1c3b89627
