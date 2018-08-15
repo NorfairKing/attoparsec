@@ -135,6 +135,7 @@ import Data.Attoparsec.Combinator
 import Data.Attoparsec.Number (Number(..))
 import Data.Scientific (Scientific)
 import qualified Data.Scientific as Sci
+import qualified Data.Scientific.Unsafe as Sci
 import Data.Attoparsec.Text.Internal (Parser, Result, parse, takeWhile1)
 import Data.Bits (Bits, (.|.), shiftL)
 import Data.Char (isAlpha, isDigit, isSpace, ord)
@@ -357,8 +358,7 @@ rational :: Fractional a => Parser a
 {-# SPECIALIZE rational :: Parser Double #-}
 {-# SPECIALIZE rational :: Parser Float #-}
 {-# SPECIALIZE rational :: Parser Rational #-}
-{-# SPECIALIZE rational :: Parser Scientific #-}
-rational = scientifically realToFrac
+rational = scientifically Sci.unsafeScientificToFrac
 
 -- | Parse a rational number.
 --

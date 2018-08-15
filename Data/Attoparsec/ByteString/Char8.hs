@@ -143,6 +143,7 @@ import Data.Int (Int8, Int16, Int32, Int64)
 import Data.String (IsString(..))
 import Data.Scientific (Scientific)
 import qualified Data.Scientific as Sci
+import qualified Data.Scientific.Unsafe as Sci
 import Data.Word (Word8, Word16, Word32, Word64)
 import Prelude hiding (takeWhile)
 import qualified Data.Attoparsec.ByteString as A
@@ -486,8 +487,7 @@ rational :: Fractional a => Parser a
 {-# SPECIALIZE rational :: Parser Double #-}
 {-# SPECIALIZE rational :: Parser Float #-}
 {-# SPECIALIZE rational :: Parser Rational #-}
-{-# SPECIALIZE rational :: Parser Scientific #-}
-rational = scientifically realToFrac
+rational = scientifically Sci.unsafeScientificToFrac
 
 -- | Parse a rational number.
 --
