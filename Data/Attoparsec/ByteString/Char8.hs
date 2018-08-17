@@ -100,7 +100,7 @@ module Data.Attoparsec.ByteString.Char8
     , double
     , Number(..)
     , number
-    , rational
+    , unsafeRational
     , scientific
 
     -- * Combinators
@@ -143,7 +143,7 @@ import Data.Int (Int8, Int16, Int32, Int64)
 import Data.String (IsString(..))
 import Data.Scientific (Scientific)
 import qualified Data.Scientific as Sci
-import qualified Data.Scientific.Unsafe as Sci
+import qualified Data.Scientific.Unsafe as UnsafeSci
 import Data.Word (Word8, Word16, Word32, Word64)
 import Prelude hiding (takeWhile)
 import qualified Data.Attoparsec.ByteString as A
@@ -483,11 +483,11 @@ signed p = (negate <$> (char8 '-' *> p))
 --
 -- In most cases, it is better to use 'double' or 'scientific'
 -- instead.
-rational :: Fractional a => Parser a
-{-# SPECIALIZE rational :: Parser Double #-}
-{-# SPECIALIZE rational :: Parser Float #-}
-{-# SPECIALIZE rational :: Parser Rational #-}
-rational = scientifically Sci.unsafeScientificToFrac
+unsafeRational :: Fractional a => Parser a
+{-# SPECIALIZE unsafeRational :: Parser Double #-}
+{-# SPECIALIZE unsafeRational :: Parser Float #-}
+{-# SPECIALIZE unsafeRational :: Parser Rational #-}
+unsafeRational = scientifically UnsafeSci.unsafeScientificToFrac
 
 -- | Parse a rational number.
 --

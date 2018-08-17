@@ -99,7 +99,7 @@ module Data.Attoparsec.Text
     , double
     , Number(..)
     , number
-    , rational
+    , unsafeRational
     , scientific
 
     -- * Combinators
@@ -135,7 +135,7 @@ import Data.Attoparsec.Combinator
 import Data.Attoparsec.Number (Number(..))
 import Data.Scientific (Scientific)
 import qualified Data.Scientific as Sci
-import qualified Data.Scientific.Unsafe as Sci
+import qualified Data.Scientific.Unsafe as UnsafeSci
 import Data.Attoparsec.Text.Internal (Parser, Result, parse, takeWhile1)
 import Data.Bits (Bits, (.|.), shiftL)
 import Data.Char (isAlpha, isDigit, isSpace, ord)
@@ -354,11 +354,11 @@ signed p = (negate <$> (I.char '-' *> p))
 --
 -- In most cases, it is better to use 'double' or 'scientific'
 -- instead.
-rational :: Fractional a => Parser a
-{-# SPECIALIZE rational :: Parser Double #-}
-{-# SPECIALIZE rational :: Parser Float #-}
-{-# SPECIALIZE rational :: Parser Rational #-}
-rational = scientifically Sci.unsafeScientificToFrac
+unsafeRational :: Fractional a => Parser a
+{-# SPECIALIZE unsafeRational :: Parser Double #-}
+{-# SPECIALIZE unsafeRational :: Parser Float #-}
+{-# SPECIALIZE unsafeRational :: Parser Rational #-}
+unsafeRational = scientifically UnsafeSci.unsafeScientificToFrac
 
 -- | Parse a rational number.
 --
